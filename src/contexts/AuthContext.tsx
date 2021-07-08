@@ -34,8 +34,6 @@ export function AuthProvider({ children }: IAuthProvider) {
 
     if (token && user) {
       setUser(JSON.parse(user))
-    } else {
-      Router.push(APP_URLS.LOGIN)
     }
   }, [])
 
