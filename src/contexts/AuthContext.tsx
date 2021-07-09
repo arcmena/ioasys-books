@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 
 import { refreshToken, signIn } from 'services/auth'
@@ -18,6 +18,7 @@ import {
 interface IAuthContext {
   user: User | null
   handleSignIn: (data: ISignIn) => Promise<void>
+  handleSignOut: () => void
 }
 
 const AuthContext = createContext({} as IAuthContext)
@@ -32,9 +33,7 @@ export function AuthProvider({ children }: IAuthProvider) {
   useEffect(() => {
     const { [AUTH_COOKIE]: token, [USER_COOKIE]: user } = parseCookies()
 
-    if (token && user) {
-      setUser(JSON.parse(user))
-    }
+    if (token && user) setUser(JSON.parse(user))
   }, [])
 
   const handleSignIn = async ({ email, password }: ISignIn) => {
@@ -62,8 +61,15 @@ export function AuthProvider({ children }: IAuthProvider) {
     }
   }
 
+  const handleSignOut = async () => {
+    destroyCookie(undefined, AUTH_COOKIE)
+    destroyCookie(undefined, REFRESH_COOKIE)
+    destroyCookie(undefined, USER_COOKIE)
+    Router.push(APP_URLS.LOGIN)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, handleSignIn }}>
+    <AuthContext.Provider value={{ user, handleSignIn, handleSignOut }}>
       {children}
     </AuthContext.Provider>
   )
