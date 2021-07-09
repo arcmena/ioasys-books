@@ -78,6 +78,7 @@ export function AuthProvider({ children }: IAuthProvider) {
     destroyCookie(undefined, AUTH_COOKIE)
     destroyCookie(undefined, REFRESH_COOKIE)
     destroyCookie(undefined, USER_COOKIE)
+
     Router.push(APP_URLS.LOGIN)
   }
 

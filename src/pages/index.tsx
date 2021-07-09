@@ -10,13 +10,16 @@ import { APP_URLS, AUTH_COOKIE } from 'utils/constants'
 
 interface Props {
   sessionExpired: boolean
+  logout: boolean
 }
 
-export default function Home({ sessionExpired }: Props) {
+export default function Home({ sessionExpired, logout }: Props) {
   const { register, handleSubmit } = useForm()
-  const { handleSignIn, handleSessionExpiration } = useAuth()
+  const { handleSignIn, handleSessionExpiration, handleSignOut } = useAuth()
 
   useEffect(() => {
+    if (logout) handleSignOut()
+
     handleSessionExpiration(sessionExpired)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -67,7 +70,8 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-      sessionExpired: !!ctx.query.sessionExpired
+      sessionExpired: !!ctx.query.sessionExpired,
+      logout: !!ctx.query.logout
     }
   }
 }

@@ -13,14 +13,16 @@ interface Props {
 }
 
 export default function Books({ books, totalPages }: Props) {
-  const { user } = useAuth()
+  const { user, handleSignOut } = useAuth()
 
   return (
     <div>
       <Head>
         <title>Ioasys Books | Books</title>
       </Head>
-      <header>hello {user?.name}</header>
+      <header>
+        hello {user?.name} <button onClick={handleSignOut}>logout</button>
+      </header>
       <h1>
         {books.map(({ id, title }) => (
           <p key={id}>{title}</p>
@@ -64,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     if (error.response.status === 401) {
       return {
         redirect: {
-          destination: '/?sessionExpired=true',
+          destination: `${APP_URLS.LOGIN}?sessionExpired=true`,
           permantent: false
         }
       }
@@ -72,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
     return {
       redirect: {
-        destination: '/?logout=true',
+        destination: `${APP_URLS.LOGIN}?logout=true`,
         permantent: false
       }
     }
