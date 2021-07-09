@@ -18,7 +18,7 @@ export default function Home({ sessionExpired, logout }: Props) {
   const { handleSignIn, handleSessionExpiration, handleSignOut } = useAuth()
 
   useEffect(() => {
-    if (logout) handleSignOut()
+    if (logout) return handleSignOut()
 
     handleSessionExpiration(sessionExpired)
     // eslint-disable-next-line react-hooks/exhaustive-deps
