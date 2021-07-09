@@ -1,4 +1,5 @@
-import { InputHTMLAttributes, ReactNode } from 'react'
+/* eslint-disable react/display-name */
+import { InputHTMLAttributes, ReactNode, forwardRef, FC } from 'react'
 import { Container } from './styles'
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
@@ -6,16 +7,19 @@ interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   children?: ReactNode
 }
 
-export default function Input({ label, children, ...rest }: IInput) {
+const Input: FC<IInput> = forwardRef(({ label, children, ...rest }, ref) => {
   return (
     <Container>
       <div>
         <label>
           <p>{label}</p>
-          <input {...rest} />
+          {/* @ts-ignore */}
+          <input ref={ref} {...rest} />
         </label>
       </div>
       {children}
     </Container>
   )
-}
+})
+
+export default Input
