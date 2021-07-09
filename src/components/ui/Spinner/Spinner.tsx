@@ -4,7 +4,7 @@ import { rgba } from 'polished'
 import { Spin } from 'styles/animations'
 
 interface ISpinner {
-  size: number
+  size?: number
 }
 
 const Spinner = styled('div')<ISpinner>`
