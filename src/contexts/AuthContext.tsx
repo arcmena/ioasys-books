@@ -19,6 +19,7 @@ interface IAuthContext {
   user: User | null
   handleSignIn: (data: ISignIn) => Promise<void>
   handleSignOut: () => void
+  handleSessionExpiration: (state: boolean) => void
 }
 
 const AuthContext = createContext({} as IAuthContext)
@@ -29,12 +30,24 @@ interface IAuthProvider {
 
 export function AuthProvider({ children }: IAuthProvider) {
   const [user, setUser] = useState<User | null>(null)
+  const [sessionExpired, setSessionExpired] = useState<boolean>(false)
 
   useEffect(() => {
     const { [AUTH_COOKIE]: token, [USER_COOKIE]: user } = parseCookies()
 
     if (token && user) setUser(JSON.parse(user))
   }, [])
+
+  const handleSessionExpired = async () => {
+    const { [REFRESH_COOKIE]: storedRefreshToken } = parseCookies()
+    const { error } = await refreshToken(storedRefreshToken)
+
+    if (!error) Router.push(APP_URLS.BOOKS)
+  }
+
+  useEffect(() => {
+    if (sessionExpired) handleSessionExpired()
+  }, [sessionExpired])
 
   const handleSignIn = async ({ email, password }: ISignIn) => {
     const { data, error } = await signIn({ email, password })
@@ -68,8 +81,12 @@ export function AuthProvider({ children }: IAuthProvider) {
     Router.push(APP_URLS.LOGIN)
   }
 
+  const handleSessionExpiration = (state: boolean) => setSessionExpired(state)
+
   return (
-    <AuthContext.Provider value={{ user, handleSignIn, handleSignOut }}>
+    <AuthContext.Provider
+      value={{ user, handleSignIn, handleSignOut, handleSessionExpiration }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -37,7 +37,6 @@ export const signIn = async ({
 }
 
 export const refreshToken = async (
-  storedToken: string,
   storedRefreshToken: string
 ): Promise<IResponse> => {
   const response: IResponse = {
@@ -46,11 +45,11 @@ export const refreshToken = async (
   }
 
   try {
-    api.defaults.headers['Authorization'] = `Bearer ${storedToken}`
-
     const { data, headers } = await api.post('/auth/refresh-token', {
       refreshToken: storedRefreshToken
     })
+
+    api.defaults.headers['Authorization'] = `Bearer ${headers.authorization}`
 
     response.data = { data, headers }
   } catch (error) {

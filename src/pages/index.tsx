@@ -1,13 +1,25 @@
+import { useEffect } from 'react'
 import Head from 'next/head'
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import useAuth from 'hooks/useAuth'
-
 import ISignIn from 'types/SignIn'
+import { APP_URLS, AUTH_COOKIE } from 'utils/constants'
 
-export default function Home() {
+interface Props {
+  sessionExpired: boolean
+}
+
+export default function Home({ sessionExpired }: Props) {
   const { register, handleSubmit } = useForm()
-  const { handleSignIn } = useAuth()
+  const { handleSignIn, handleSessionExpiration } = useAuth()
+
+  useEffect(() => {
+    handleSessionExpiration(sessionExpired)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onSubmit: SubmitHandler<ISignIn> = async data => {
     await handleSignIn(data)
@@ -38,4 +50,24 @@ export default function Home() {
       </div>
     </>
   )
+}
+
+// @ts-ignore
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { [AUTH_COOKIE]: token } = parseCookies(ctx)
+
+  if (token && !ctx.query.sessionExpired && !ctx.query.logout) {
+    return {
+      redirect: {
+        destination: APP_URLS.BOOKS,
+        permantent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      sessionExpired: !!ctx.query.sessionExpired
+    }
+  }
 }
