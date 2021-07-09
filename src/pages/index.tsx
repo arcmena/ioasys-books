@@ -8,6 +8,8 @@ import useAuth from 'hooks/useAuth'
 import ISignIn from 'types/SignIn'
 import { APP_URLS, AUTH_COOKIE } from 'utils/constants'
 
+import SEO from 'components/common/SEO'
+
 interface Props {
   sessionExpired: boolean
   logout: boolean
@@ -30,9 +32,10 @@ export default function Home({ sessionExpired, logout }: Props) {
 
   return (
     <>
-      <Head>
-        <title>Ioasys Books | Login</title>
-      </Head>
+      <SEO
+        title="Ioasys Books | Login"
+        description="Faça login e veja todos os livros!"
+      />
       <div>
         <h1>ioasys</h1>
         <div>
