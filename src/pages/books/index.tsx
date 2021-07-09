@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { parseCookies } from 'nookies'
 
 import useAuth from 'hooks/useAuth'
@@ -10,6 +11,9 @@ export default function Books() {
 
   return (
     <div>
+      <Head>
+        <title>Ioasys Books | Books</title>
+      </Head>
       <h1>books</h1>
       <p>hello {user?.name}</p>
     </div>

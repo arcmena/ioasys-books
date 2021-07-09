@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Ioasys Books | Home</title>
+        <title>Ioasys Books | Login</title>
       </Head>
       <div>
         <h1>ioasys</h1>
