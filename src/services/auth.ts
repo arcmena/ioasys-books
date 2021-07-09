@@ -1,13 +1,16 @@
 import ISignIn from 'types/SignIn'
 
-import api from './api'
+import { api } from './api'
 
 interface IResponse {
   data: any
   error: any
 }
 
-export const signIn = async ({ email, password }: ISignIn) => {
+export const signIn = async ({
+  email,
+  password
+}: ISignIn): Promise<IResponse> => {
   const response: IResponse = {
     data: undefined,
     error: undefined
@@ -36,7 +39,7 @@ export const signIn = async ({ email, password }: ISignIn) => {
 export const refreshToken = async (
   storedToken: string,
   storedRefreshToken: string
-) => {
+): Promise<IResponse> => {
   const response: IResponse = {
     data: undefined,
     error: undefined
