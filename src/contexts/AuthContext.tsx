@@ -17,6 +17,7 @@ import {
 
 interface IAuthContext {
   user: User | null
+  loading: boolean
   handleSignIn: (data: ISignIn) => Promise<void | string>
   handleSignOut: () => void
   handleSessionExpiration: (state: boolean) => void
@@ -31,6 +32,7 @@ interface IAuthProvider {
 export function AuthProvider({ children }: IAuthProvider) {
   const [user, setUser] = useState<User | null>(null)
   const [sessionExpired, setSessionExpired] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const { [AUTH_COOKIE]: token, [USER_COOKIE]: user } = parseCookies()
@@ -53,6 +55,7 @@ export function AuthProvider({ children }: IAuthProvider) {
     email,
     password
   }: ISignIn): Promise<void | string> => {
+    setLoading(true)
     const { data, error } = await signIn({ email, password })
 
     if (data) {
@@ -69,10 +72,12 @@ export function AuthProvider({ children }: IAuthProvider) {
       })
 
       setUser(data.data)
+      setLoading(false)
 
       Router.push(APP_URLS.BOOKS)
     } else {
       //TODO: handle errors
+      setLoading(false)
       console.error(error)
       return error
     }
@@ -90,7 +95,13 @@ export function AuthProvider({ children }: IAuthProvider) {
 
   return (
     <AuthContext.Provider
-      value={{ user, handleSignIn, handleSignOut, handleSessionExpiration }}
+      value={{
+        user,
+        handleSignIn,
+        handleSignOut,
+        handleSessionExpiration,
+        loading
+      }}
     >
       {children}
     </AuthContext.Provider>

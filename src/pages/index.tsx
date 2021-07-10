@@ -1,23 +1,36 @@
-import { useEffect } from 'react'
-import Head from 'next/head'
+import { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm, useFormState } from 'react-hook-form'
 
 import useAuth from 'hooks/useAuth'
 import ISignIn from 'types/SignIn'
 import { APP_URLS, AUTH_COOKIE } from 'utils/constants'
 
 import SEO from 'components/common/SEO'
+import Logo from 'components/common/Logo'
+import Input from 'components/ui/Input'
+import Tooltip from 'components/ui/Tooltip'
+
+import { Container } from 'styles/pages/Login'
+import Button from 'components/ui/Button'
 
 interface Props {
   sessionExpired: boolean
   logout: boolean
 }
 
-export default function Home({ sessionExpired, logout }: Props) {
-  const { register, handleSubmit } = useForm()
-  const { handleSignIn, handleSessionExpiration, handleSignOut } = useAuth()
+export default function Login({ sessionExpired, logout }: Props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm()
+  const { handleSignIn, handleSessionExpiration, handleSignOut, loading } =
+    useAuth()
+
+  const [authError, setAuthError] = useState<string>('')
 
   useEffect(() => {
     if (logout) return handleSignOut()
@@ -27,7 +40,9 @@ export default function Home({ sessionExpired, logout }: Props) {
   }, [])
 
   const onSubmit: SubmitHandler<ISignIn> = async data => {
-    await handleSignIn(data)
+    const error = await handleSignIn(data)
+
+    if (error) setAuthError(String(error))
   }
 
   return (
@@ -36,24 +51,32 @@ export default function Home({ sessionExpired, logout }: Props) {
         title="Ioasys Books | Login"
         description="Faça login e veja todos os livros!"
       />
-      <div>
-        <h1>ioasys</h1>
+      <Container>
         <div>
+          <Logo variant="white" />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <input
+            <Input
+              label="Email"
               type="email"
-              placeholder="Seu email"
               {...register('email', { required: true })}
             />
-            <input
+            <Input
+              label="Senha"
               type="password"
-              placeholder="Sua senha"
               {...register('password', { required: true })}
-            />
-            <button type="submit">submit</button>
+            >
+              <Button type="submit" loading={loading} disabled={loading}>
+                Entrar
+              </Button>
+            </Input>
+            {errors.email || errors.password ? (
+              <Tooltip>Email e senha obrigatórios</Tooltip>
+            ) : (
+              authError && <Tooltip>{authError}</Tooltip>
+            )}
           </form>
         </div>
-      </div>
+      </Container>
     </>
   )
 }
