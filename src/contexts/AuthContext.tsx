@@ -17,7 +17,7 @@ import {
 
 interface IAuthContext {
   user: User | null
-  handleSignIn: (data: ISignIn) => Promise<void>
+  handleSignIn: (data: ISignIn) => Promise<void | string>
   handleSignOut: () => void
   handleSessionExpiration: (state: boolean) => void
 }
@@ -49,7 +49,10 @@ export function AuthProvider({ children }: IAuthProvider) {
     if (sessionExpired) handleSessionExpired()
   }, [sessionExpired])
 
-  const handleSignIn = async ({ email, password }: ISignIn) => {
+  const handleSignIn = async ({
+    email,
+    password
+  }: ISignIn): Promise<void | string> => {
     const { data, error } = await signIn({ email, password })
 
     if (data) {
@@ -71,6 +74,7 @@ export function AuthProvider({ children }: IAuthProvider) {
     } else {
       //TODO: handle errors
       console.error(error)
+      return error
     }
   }
 
