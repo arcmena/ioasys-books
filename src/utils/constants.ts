@@ -1,8 +1,8 @@
 export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export const APP_URLS = {
-  BOOKS: '/books',
-  LOGIN: '/'
+  LOGIN: '/',
+  BOOKS: '/books'
 }
 
 export const AUTH_COOKIE = 'ioasys.token'
