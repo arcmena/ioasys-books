@@ -4,6 +4,7 @@ import { rgba } from 'polished'
 export const Container = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   background-color: ${({ theme: { colors } }) => rgba(colors.black, 0.32)};
   border-radius: 4px;
