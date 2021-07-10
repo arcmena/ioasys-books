@@ -7,12 +7,11 @@ export default createGlobalStyle`
         margin: 0;
     }
     html {
-        font-size: 62.5%;
         width: 100%;
         height: -webkit-fill-available;
     }
     body {
-        font-family: 'Heebo', sans-serif;
+        font-family: Heebo, sans-serif;
         color: ${({ theme: { colors } }) => colors.black};
         ${({ theme: { mixins } }) => mixins.fillContainer};
     }
