@@ -1,4 +1,4 @@
-export interface IBooks {
+export interface IBook {
   id: string
   title: string
   description: string
@@ -14,7 +14,7 @@ export interface IBooks {
 }
 
 export interface IBookResponse {
-  data: IBooks[]
+  data: IBook[]
   page: number
   totalPages: number
   totalItems: number
