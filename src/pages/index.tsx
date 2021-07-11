@@ -24,7 +24,6 @@ export default function Login({ sessionExpired, logout }: Props) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors }
   } = useForm()
   const { handleSignIn, handleSessionExpiration, handleSignOut, loading } =
