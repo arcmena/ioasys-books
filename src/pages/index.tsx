@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import { SubmitHandler, useForm, useFormState } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import useAuth from 'hooks/useAuth'
 import ISignIn from 'types/SignIn'
@@ -11,9 +11,9 @@ import SEO from 'components/common/SEO'
 import Logo from 'components/common/Logo'
 import Input from 'components/ui/Input'
 import Tooltip from 'components/ui/Tooltip'
+import Button from 'components/ui/Button'
 
 import { Container } from 'styles/pages/Login'
-import Button from 'components/ui/Button'
 
 interface Props {
   sessionExpired: boolean
