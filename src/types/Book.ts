@@ -2,7 +2,7 @@ export interface IBook {
   id: string
   title: string
   description: string
-  authors: string[]
+  authors: string
   pageCount: number
   category: string
   imageUrl: string
@@ -13,8 +13,12 @@ export interface IBook {
   published: number
 }
 
+export interface RawBook extends Omit<IBook, 'authors'> {
+  authors: string[]
+}
+
 export interface IBookResponse {
-  data: IBook[]
+  data: RawBook[]
   page: number
   totalPages: number
   totalItems: number
