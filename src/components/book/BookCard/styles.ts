@@ -25,6 +25,10 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: space-between;
 
+    > div {
+      padding-right: 16px;
+    }
+
     h1 {
       font-weight: 500;
       font-size: 14px;
