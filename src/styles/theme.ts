@@ -1,8 +1,9 @@
 const theme = {
   colors: {
     black: '#121212',
+    black_2: '#333333',
     white: '#ffffff',
-    gray: '#E3E6EC',
+    gray: '#999999',
     purple: '#AB2680'
   },
   mixins: {
