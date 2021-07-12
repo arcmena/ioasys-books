@@ -19,4 +19,13 @@ export default createGlobalStyle`
         text-decoration: none;
         color: inherit;
     }
+
+    ::-webkit-scrollbar{
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background-color: ${({ theme: { colors } }) => colors.purple};
+        border-radius: 30px;
+    }
 `
