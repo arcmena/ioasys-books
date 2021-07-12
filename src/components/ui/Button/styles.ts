@@ -17,7 +17,11 @@ export const Container = styled.button`
   transition: opacity 0.2s ease-in-out;
 
   &:disabled {
-    background-color: ${({ theme: { colors } }) => lighten(0.1, colors.white)};
+    cursor: default;
+
+    svg {
+      opacity: 0.4;
+    }
   }
 
   &:hover {
