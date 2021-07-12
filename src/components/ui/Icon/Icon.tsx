@@ -13,7 +13,7 @@ const icons = {
 }
 
 interface IIcons {
-  name: 'chevron-left' | 'chevron-right' | 'logout'
+  name: 'chevron-left' | 'chevron-right' | 'logout' | 'quotes' | 'close'
 }
 
 export default function Icon({ name }: IIcons) {
