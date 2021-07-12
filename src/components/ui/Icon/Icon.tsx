@@ -2,7 +2,7 @@ import ChevronLeft from './svgs/chevron-left.svg'
 import ChevronRight from './svgs/chevron-right.svg'
 import LogOut from './svgs/logout.svg'
 import Quotes from './svgs/quotes.svg'
-import Close from './svgs/quotes.svg'
+import Close from './svgs/close.svg'
 
 const icons = {
   'chevron-left': <ChevronLeft />,
