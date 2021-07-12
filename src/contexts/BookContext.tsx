@@ -45,7 +45,6 @@ export function BookProvider({ children }: IBookProvider) {
 
   const openBook = (book: IBook) => {
     setSelectedBook(book)
-    console.log(book)
   }
 
   const closeBook = () => {
