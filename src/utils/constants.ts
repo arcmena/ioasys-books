@@ -5,6 +5,14 @@ export const APP_URLS = {
   BOOKS: '/books'
 }
 
+export const SIZES = {
+  XS: 320,
+  SM: 425,
+  MD: 768,
+  LG: 1024,
+  XL: 1280
+}
+
 export const AUTH_COOKIE = 'ioasys.token'
 
 export const REFRESH_COOKIE = 'ioasys.refresh_token'
