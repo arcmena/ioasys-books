@@ -37,6 +37,7 @@ export const Container = styled.div`
       border-radius: 44px;
 
       color: ${({ theme: { colors } }) => colors.purple};
+      background-color: ${({ theme: { colors } }) => colors.white};
     }
   }
 
