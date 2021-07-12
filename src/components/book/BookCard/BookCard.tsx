@@ -18,18 +18,18 @@ export default function BookCar({
     <Container onClick={onClick}>
       <div className="book__image">
         <Image
-          src={imageUrl}
+          src={imageUrl || '/books/book-placeholder.png'}
           alt={title}
           width={81}
           height={122}
-          blurDataURL={imageUrl}
+          blurDataURL={imageUrl || '/books/book-placeholder.png'}
           placeholder="blur"
         />
       </div>
       <div className="book__info">
         <div>
-          <h1>{title}</h1>
-          <h3>{authors}</h3>
+          <h1 title={title}>{title}</h1>
+          <h3 title={authors}>{authors}</h3>
         </div>
         <div>
           <p>{pageCount} páginas</p>
